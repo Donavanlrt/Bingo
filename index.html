@@ -30,7 +30,7 @@
             if (drawnNumbers.length >= 100) return;
             let newNumber;
             do {
-                newNumber = Math.floor(Math.random() * 100) + 1;
+                newNumber = Math.floor(Math.random() * 90) + 1;
             } while (drawnNumbers.includes(newNumber));
             drawnNumbers.push(newNumber);
             document.getElementById("current-number").textContent = newNumber;
@@ -46,7 +46,7 @@
         function updateGrid() {
             const grid = document.getElementById("number-grid");
             grid.innerHTML = "";
-            for (let i = 1; i <= 100; i++) {
+            for (let i = 1; i <= 90; i++) {
                 const numberBox = document.createElement("span");
                 numberBox.textContent = i;
                 numberBox.className = "p-2 w-10 h-10 flex items-center justify-center rounded-full " +
@@ -55,7 +55,7 @@
             }
         }
 
-        // Générer la grille au chargement de la page
+        // chargement de la page
         updateGrid();
     </script>
 </body>
