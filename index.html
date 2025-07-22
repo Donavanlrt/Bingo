@@ -1,62 +1,67 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bingo</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bingo</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body class="flex flex-row items-start p-10 bg-slate-200">
-    <div class="flex flex-col items-center w-[40%]">
-        <h1 class="text-2xl font-bold">Bingo</h1>
-        <div class="p-12 text-center bg-white shadow rounded-full w-[30%] my-7">
-            <p id="current-number" class="text-5xl font-bold">-</p>
-        </div>
-        <div class="flex gap-6 w-[30%]">
-            <button onclick="drawNumber()" id="draw-btn" class="bg-blue-500 text-white px-4 py-2 rounded"><img src="./img/melanger.png"</img></button>
-            <button onclick="resetGame()" class="bg-red-500 text-white px-4 py-2 rounded"><img src="./img/refaire.png"</img></button>
-        </div>
+<body class="body-container">
+  <div class="left-panel">
+    <h1 class="title">Bingo</h1>
+    <div class="number-display">
+      <p id="current-number" class="current-number">-</p>
     </div>
-    <div class="w-[60%]">
-        <!-- <h2 class="text-2xl font-bold mb-7 text-center"></h2> -->
-        <div id="number-grid" class="grid gap-3 justify-items-center grid-cols-10 gap-3x">
-            <!-- Les nombres seront générés ici -->
-        </div>
+    <div class="button-group">
+      <button onclick="drawNumber()" id="draw-btn" class="button blue-button">
+        Mélanger
+      </button>
+      <button onclick="resetGame()" class="button red-button">
+        Reset
+      </button>
     </div>
+  </div>
 
-    <script>
-        let drawnNumbers = [];
-        function drawNumber() {
-            if (drawnNumbers.length >= 100) return;
-            let newNumber;
-            do {
-                newNumber = Math.floor(Math.random() * 90) + 1;
-            } while (drawnNumbers.includes(newNumber));
-            drawnNumbers.push(newNumber);
-            document.getElementById("current-number").textContent = newNumber;
-            updateGrid();
-        }
+  <div class="right-panel">
+    <div id="number-grid" class="number-grid">
+      <!-- Les nombres seront générés ici -->
+    </div>
+  </div>
 
-        function resetGame() {
-            drawnNumbers = [];
-            document.getElementById("current-number").textContent = "-";
-            updateGrid();
-        }
+  <script>
+    let drawnNumbers = [];
 
-        function updateGrid() {
-            const grid = document.getElementById("number-grid");
-            grid.innerHTML = "";
-            for (let i = 1; i <= 90; i++) {
-                const numberBox = document.createElement("span");
-                numberBox.textContent = i;
-                numberBox.className = "p-2 w-10 h-10 flex items-center justify-center rounded-full " +
-                    (drawnNumbers.includes(i) ? "bg-blue-500 text-white" : "bg-stone-50");
-                grid.appendChild(numberBox);
-            }
-        }
+    function drawNumber() {
+      if (drawnNumbers.length >= 100) return;
+      let newNumber;
+      do {
+        newNumber = Math.floor(Math.random() * 90) + 1;
+      } while (drawnNumbers.includes(newNumber));
+      drawnNumbers.push(newNumber);
+      document.getElementById("current-number").textContent = newNumber;
+      updateGrid();
+    }
 
-        // chargement de la page
-        updateGrid();
-    </script>
+    function resetGame() {
+      drawnNumbers = [];
+      document.getElementById("current-number").textContent = "-";
+      updateGrid();
+    }
+
+    function updateGrid() {
+      const grid = document.getElementById("number-grid");
+      grid.innerHTML = "";
+      for (let i = 1; i <= 90; i++) {
+        const numberBox = document.createElement("span");
+        numberBox.textContent = i;
+        numberBox.className =
+          "number-box " +
+          (drawnNumbers.includes(i) ? "drawn" : "not-drawn");
+        grid.appendChild(numberBox);
+      }
+    }
+
+    updateGrid();
+  </script>
 </body>
 </html>
